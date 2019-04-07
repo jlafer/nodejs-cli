@@ -1,0 +1,18 @@
+{
+  "name": "wfo-export",
+  "version": "1.0.0",
+  "description": "a NodeJS CLI script for exporting Flex WFO reports",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jlafer",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "commander": "^2.19.0",
+    "dotenv": "^7.0.0",
+    "jlafer-node-util": "^1.0.2",
+    "ramda": "^0.26.1"
+  }
+}
