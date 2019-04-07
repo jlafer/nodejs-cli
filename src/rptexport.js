@@ -29,7 +29,7 @@
 */
 const pgm = require('commander');
 const {login} = require('./access');
-const {exportReport} = require('./report');
+const {exportReport} = require('./reports');
 const {writeToTextFile} = require('jlafer-node-util');
 
 pgm

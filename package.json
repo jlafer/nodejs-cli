@@ -1,13 +1,19 @@
 {
-  "name": "wfo-export",
+  "name": "gooddata-cli",
   "version": "1.0.0",
-  "description": "a NodeJS CLI script for exporting Flex WFO reports",
+  "description": "Some NodeJS CLI commands for working with GoodData reports",
   "main": "index.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "bin": {
+    "gdutil": "bin/gdutil"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jlafer",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "commander": "^2.19.0",

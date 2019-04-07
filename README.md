@@ -6,9 +6,10 @@ This is my collection of CLIs and utility functions that I find useful when work
 
     npm install
 
-Edit src/cfg.js to set BASE_API_URL to the URL of your GoodData API. This will either be https://secure.gooddata.com for the standard GoodData cloud service or the white-label URL of your data provider (e.g., https://analytics.ytica.com/). Note that the trailing slash is required.
+Edit src/cfg.js to set BASE_API_URL to the URL of your GoodData API. This will either be https://secure.gooddata.com/ for the standard GoodData cloud service or the white-label URL of your data provider (e.g., https://analytics.ytica.com/). Note that the trailing slash is required.
 
 ## Command-line Interfaces
+Documentation on suggested usage of the CLIs can be found at the top of their respective source files.
 
 ### getmeta
 CLI for querying and displaying GoodData report defns and other metadata. The data returned is needed for executing the 'rptexport' script.
