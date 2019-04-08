@@ -1,8 +1,8 @@
-const BASE_API_URL = 'https://analytics.ytica.com/';
+const BASE_GD_URL = 'https://analytics.ytica.com/';
 
 const makeGdAxiosConfig = (tempToken) => {
   return {
-    baseURL: BASE_API_URL,
+    baseURL: BASE_GD_URL,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -12,6 +12,6 @@ const makeGdAxiosConfig = (tempToken) => {
 };
 
 module.exports = {
-  BASE_API_URL,
+  BASE_GD_URL,
   makeGdAxiosConfig
 };

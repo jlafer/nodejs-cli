@@ -1,9 +1,11 @@
+const ora = require('ora');
 const {getObject, getReportOutput, getReportDefnOutput, getAttribFormOutput}
   = require('../src/metadata');
 const {login} = require('../src/access');
 
 module.exports = (args) => {
   const {user, pswd, wrkspc, object, type} = args;
+  const spinner = ora().start();
   login(user, pswd)
   .then((res) => {
     return Promise.all(
@@ -11,9 +13,7 @@ module.exports = (args) => {
     );
   })
   .then((fluid) => {
-    //console.log(`fluid:`, fluid);
     const [tempToken, res] = fluid;
-    //console.log(`object:`, res.data);
     switch (type) {
       case 'report':
         return getReportOutput(res.data, object);
@@ -24,7 +24,11 @@ module.exports = (args) => {
     }
   })
   .then((output) => {
+    spinner.stop();
     console.log(output);
   })
-  .catch(err => console.log('error:', err));
+  .catch(err => {
+    spinner.stop();
+    console.log('error:', err)
+  });
 }

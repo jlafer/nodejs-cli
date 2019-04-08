@@ -1,9 +1,9 @@
 const axios = require('axios');
-const {BASE_API_URL} = require('./cfg');
+const {BASE_GD_URL} = require('./cfg');
 
 const login = (username, password) => {
   const gdAxiosConfig = {
-    baseURL: BASE_API_URL
+    baseURL: BASE_GD_URL
   };
   const gdData = {
     "postUserLogin": {

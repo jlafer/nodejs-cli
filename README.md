@@ -1,14 +1,14 @@
 # jlafer-gooddata-cli
 
-This package provides a CLI -- gdutil -- that I find useful when working with the GoodData API to run reports.
+This package provides a CLI -- `gdutil` -- that I find useful when working with the GoodData API to run reports.
 
 ## Installation
 
     npm install
 
-To add the gdutil to your system path, you can optionally run `npm link` in the project folder. Note: it will likely require root or `sudo` access as it changes the system path.
+To add `gdutil` to your system path, you can optionally run `npm link` in the project folder. Note: it will likely require root or `sudo` access as it changes the system path.
 
-Edit src/cfg.js to set BASE_API_URL to the URL of your GoodData API. This will either be https://secure.gooddata.com/ for the standard GoodData cloud service or the white-label URL of your data provider (e.g., https://analytics.ytica.com/). Note that the trailing slash is required.
+Edit src/cfg.js to set BASE_GD_URL to the URL of your GoodData API. This will either be https://secure.gooddata.com/ for the standard GoodData cloud service or the white-label URL of your data provider (e.g., https://analytics.ytica.com/). Note that the trailing slash is required.
 
 ## Command-line Interface
     gdutil list
@@ -44,7 +44,7 @@ Armed with the required IDs noted above, you can now create a command-line to ru
 NOTE: the GoodData gray pages can also get this data, although often not as conveniently.
 
     gdutil report
-The report command is for executing and exporting a report, with support for dynamic filters. The resulting .csv file is placed in the /tmp folder.
+The `report` command is for executing and exporting a report, with support for dynamic filters. The resulting .csv file is placed in the /tmp folder.
 
 All of the command-line arguments are straightforward, with the exception of the
 --filters (-f) argument. It takes a JSON object with the following format:
@@ -58,9 +58,9 @@ The parameter is an array of filters. Each filter has the following properties:
 - `attributeId` is the attribute ID; only used with type=list
 - `values` is an array of values or,  when type=list, element IDs; normal JSON rules apply
   
-A `list` filter on three color-codes might look like this:
+A `list` filter on three elements (i.e., values) might look like this:
 ```
-{"type":"list","filterId":<id>,"attributeId":<id>,"values":["red","blu","wht"]}
+{"type":"list","filterId":<id>,"attributeId":<id>,"values":[id1, id2, id3]}
 ```
 An `interval` filter on two dates might look like this:
 ```

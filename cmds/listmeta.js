@@ -1,9 +1,11 @@
+const ora = require('ora');
 const {getReports, getObjectTypes, getObjIdFromUri}
   = require('../src/metadata');
 const {login} = require('../src/access');
 
 module.exports = (args) => {
   const {user, pswd, wrkspc, type} = args;
+  const spinner = ora().start();
   login(user, pswd)
   .then((res) => {
     if (type === 'reports')
@@ -12,6 +14,7 @@ module.exports = (args) => {
       return getObjectTypes(res.tempToken, wrkspc);
   })
   .then((res) => {
+    spinner.stop();
     console.log(`listing for: ${type}`);
     if (type === 'reports')
       res.data.query.entries.forEach(entry => {
@@ -24,5 +27,8 @@ module.exports = (args) => {
         console.log(`  ${entry.link}`);
       })
   })
-  .catch(err => console.log('error:', err));
+  .catch(err => {
+    spinner.stop();
+    console.log('error:', err)
+  });
 };
