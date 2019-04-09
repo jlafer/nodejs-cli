@@ -2,6 +2,10 @@ const axios = require('axios');
 const R = require('ramda');
 const {makeGdAxiosConfig} = require('./cfg');
 
+const getDatasets = (tempToken, wrkspcId) => {
+  return getProjectResource(tempToken, wrkspcId, '/query/datasets');
+};
+
 const getReports = (tempToken, wrkspcId) => {
   return getProjectResource(tempToken, wrkspcId, '/query/reports');
 };
@@ -102,6 +106,7 @@ const getProjectResource = (tempToken, wrkspcId, resourcePath) => {
 };
 
 module.exports = {
+  getDatasets,
   getObject,
   getObjectTypes,
   getReports,

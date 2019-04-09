@@ -1,3 +1,6 @@
+/*
+  This module supports the 'report' command of the 'gdutil' CLI program.
+*/
 const ora = require('ora');
 const {writeToTextFile} = require('jlafer-node-util');
 const {login} = require('../src/access');
