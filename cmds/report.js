@@ -3,6 +3,7 @@
 */
 const ora = require('ora');
 const {writeToTextFile} = require('jlafer-node-util');
+const error = require('../src/error');
 const {login} = require('../src/access');
 const {exportReport} = require('../src/reports');
 
@@ -24,6 +25,6 @@ module.exports = (args) => {
   })
   .catch(err => {
     spinner.stop();
-    console.log('error:', err)
+    error(`${err}`);
   });
 };

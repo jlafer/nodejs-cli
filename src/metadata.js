@@ -6,6 +6,10 @@ const getDatasets = (tempToken, wrkspcId) => {
   return getProjectResource(tempToken, wrkspcId, '/query/datasets');
 };
 
+const getDimensions = (tempToken, wrkspcId) => {
+  return getProjectResource(tempToken, wrkspcId, '/query/dimensions');
+};
+
 const getReports = (tempToken, wrkspcId) => {
   return getProjectResource(tempToken, wrkspcId, '/query/reports');
 };
@@ -27,6 +31,27 @@ const getIdArgFromUri = (uri) => {
   console.log(`getIdArgFromUri from ${uri}`);
   const reObjId = new RegExp('.+id=([0-9]+)');
   return reObjId.exec(uri)[1];
+};
+
+const attributeProps = (attrib) => {
+  const uri = R.path(['meta', 'uri'], attrib);
+  const objId = getObjIdFromUri(uri);
+  const identifier = R.path(['meta', 'identifier'], attrib);
+  const title = R.path(['meta', 'title'], attrib);
+  return {objId, identifier, title};
+}
+
+const attributeToStr = (props) => {
+  return `attribute ${props.objId} [${props.identifier}] [${props.title}]`;
+};
+
+const getDimensionOutput = (dim, objId) => {
+  //console.log('dimension:', dim);
+  const title = R.path(['dimension', 'meta', 'title'], dim);
+  const attribs = R.path(['dimension', 'content', 'attributes'], dim)
+    .map(attributeProps)
+    .map(attributeToStr).join('\n');
+  return `--type dimension --object ${objId} [${title}]\n${attribs}`;
 };
 
 const getReportOutput = (report, objId) => {
@@ -107,9 +132,11 @@ const getProjectResource = (tempToken, wrkspcId, resourcePath) => {
 
 module.exports = {
   getDatasets,
+  getDimensions,
   getObject,
   getObjectTypes,
   getReports,
+  getDimensionOutput,
   getReportOutput,
   getReportDefnOutput,
   getAttribFormOutput,

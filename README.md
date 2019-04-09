@@ -20,7 +20,7 @@ Please run `gdutil --help` at the command-line to see commands and arguments.
 
 The recommended usage is the following sequence of commands:
 ```
-gdutil list -u <user> -p <pswd> -w <wrkspc_id> -t reports
+gdutil list -u <user> -p <pswd> -w <wrkspc_id> -t report
 ```
   to list all reports and their ID; note the ID of the report you want to run; it will be used in the next command
 
