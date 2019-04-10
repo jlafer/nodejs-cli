@@ -2,17 +2,17 @@
   This module supports the 'get' command of the 'gdutil' CLI program.
   It currently can report selected data for the following metadata types,
   using the --type argument:
-    'dimension', 'report', 'rptdefn' and 'attribForm'.
+    'dimension', 'report', 'rptdefn', 'table' or 'attribForm'.
 */
 const ora = require('ora');
 const {getObject, getDimensionOutput, getReportOutput, getReportDefnOutput,
-      getAttribFormOutput}
+      getTableOutput, getAttribFormOutput}
   = require('../src/metadata');
 const error = require('../src/error');
 const {login} = require('../src/access');
 
 const validTypes = [
-  'attribForm', 'dimension', 'report', 'rptdefn'
+  'attribForm', 'dimension', 'report', 'rptdefn', 'table'
 ];
 
 module.exports = (args) => {
@@ -31,14 +31,16 @@ module.exports = (args) => {
   .then((fluid) => {
     const [tempToken, res] = fluid;
     switch (type) {
+      case 'attribForm':
+        return getAttribFormOutput(tempToken, wrkspc, res.data);
       case 'dimension':
         return getDimensionOutput(res.data, object);
       case 'report':
         return getReportOutput(res.data, object);
       case 'rptdefn':
         return getReportDefnOutput(tempToken, wrkspc, res.data, object);
-      case 'attribForm':
-        return getAttribFormOutput(tempToken, wrkspc, res.data);
+      case 'table':
+        return getTableOutput(tempToken, wrkspc, res.data, object);
     }
   })
   .then((output) => {
@@ -47,6 +49,7 @@ module.exports = (args) => {
   })
   .catch(err => {
     spinner.stop();
+    console.log('error:', err)
     error(`${err}`);
   });
 }
