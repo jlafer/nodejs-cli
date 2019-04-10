@@ -29,18 +29,18 @@ module.exports = (args) => {
     );
   })
   .then((fluid) => {
-    const [tempToken, res] = fluid;
+    const [tempToken, data] = fluid;
     switch (type) {
       case 'attribForm':
-        return getAttribFormOutput(tempToken, wrkspc, res.data);
+        return getAttribFormOutput(tempToken, wrkspc, data);
       case 'dimension':
-        return getDimensionOutput(res.data, object);
+        return getDimensionOutput(data, object);
       case 'report':
-        return getReportOutput(res.data, object);
+        return getReportOutput(data, object);
       case 'rptdefn':
-        return getReportDefnOutput(tempToken, wrkspc, res.data, object);
+        return getReportDefnOutput(tempToken, wrkspc, data, object);
       case 'table':
-        return getTableOutput(tempToken, wrkspc, res.data, object);
+        return getTableOutput(tempToken, wrkspc, data, object);
     }
   })
   .then((output) => {

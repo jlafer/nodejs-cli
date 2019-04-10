@@ -16,8 +16,8 @@ module.exports = (args) => {
   .then((res) => {
     return exportReport(res.tempToken, wrkspc, obj, filterExprs);
   })
-  .then((res) => {
-    writeToTextFile(path, res.data);
+  .then((data) => {
+    writeToTextFile(path, data);
   })
   .then(() => {
     spinner.stop();

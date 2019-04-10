@@ -36,7 +36,7 @@ const getObjIdFromUri = (uri) => {
 };
 
 const getIdArgFromUri = (uri) => {
-  console.log(`getIdArgFromUri from ${uri}`);
+  //console.log(`getIdArgFromUri from ${uri}`);
   const reObjId = new RegExp('.+id=([0-9]+)');
   return reObjId.exec(uri)[1];
 };
@@ -65,7 +65,9 @@ const getDimensionOutput = (dim, objId) => {
 const getReportOutput = (report, objId) => {
   const title = R.path(['report', 'meta', 'title'], report);
   const defns = R.path(['report', 'content', 'definitions'], report)
-    .map(getObjIdFromUri).map(objId => ` --type rptdefn --object ${objId}`).join('\n');
+    .map(getObjIdFromUri)
+    .map(objId => ` --type rptdefn --object ${objId}`)
+    .join('\n');
   return `--type report --object ${objId} [${title}]\n${defns}`;
 };
 
@@ -78,12 +80,12 @@ const getAttribForm = R.curry((tempToken, wrkspcId, attribRef) => {
 
 const getAttribFormOutput = async (tempToken, wrkspcId, attribForm) => {
   const props = attribFormProps(attribForm);
-  const attribElemsRes = await getProjectResource(
+  const attribElems = await getProjectResource(
     tempToken,
     wrkspcId,
     `/obj/${props.objId}/elements`
   );
-  const attribElemsStr = attribElemsRes.data.attributeElements.elements
+  const attribElemsStr = attribElems.attributeElements.elements
     .map(attribElemProps)
     .map(attribElemToStr)
     .join('\n');
@@ -126,9 +128,10 @@ const getReportDefnOutput = async (tempToken, wrkspcId, rptdefn, objId) => {
   const attribFormsRes = await Promise.all(
     attribRefs.map(getAttribForm(tempToken, wrkspcId))
   );
-  const attribForms = attribFormsRes.map(res => res.data);
-  const attribFormsOutput = attribForms
-    .map(attribFormProps).map(attribFormToStr).join('\n');
+  const attribFormsOutput = attribFormsRes
+    .map(attribFormProps)
+    .map(attribFormToStr)
+    .join('\n');
   return `--type rptdefn --object ${objId}\n${attribFormsOutput}`;
 };
 
@@ -158,7 +161,6 @@ const getTblAndColFromColTitle = (title) => {
   const reDateColumn = new RegExp('([a-z_0-9]+) \\((.+)\\)');
   let reResult = reTblAndCol.exec(title)
   if (! reResult) {
-    console.log('title = ', title);
     reResult = reDateColumn.exec(title);
     return {tblName: reResult[2], colName: reResult[1]};
   }
@@ -174,12 +176,9 @@ const inTable = R.curry((tblName, col) => {
 
 const getTableOutput = async (tempToken, wrkspcId, table, objId) => {
   const tblProps = tableProps(table);
-  const colListRes = await getColumns(tempToken, wrkspcId);
-  const colBriefs = colListRes.data.query.entries;
-  console.log(`retrieved ${colBriefs.length} column briefs`);
-  console.log(`table uri = ${tblProps.uri}`);
+  const colList = await getColumns(tempToken, wrkspcId);
+  const colBriefs = colList.query.entries;
   const tblColBriefs = colBriefs.filter(inTable(tblProps.name));
-  console.log(`filtered to ${tblColBriefs.length} table column briefs`);
   const tblColumns = await Promise.all(
     tblColBriefs
     .map(R.prop('link'))
@@ -187,15 +186,17 @@ const getTableOutput = async (tempToken, wrkspcId, table, objId) => {
     .map(getObject(tempToken, wrkspcId))
   );
   const columnsOutput = tblColumns
-    .map(res => res.data)
-    .map(columnProps).map(columnToStr).join('\n');
+    .map(columnProps)
+    .map(columnToStr)
+    .join('\n');
   return `--type table --object ${objId} [${tblProps.name}]\n${columnsOutput}`;
 };
 
 const getProjectResource = (tempToken, wrkspcId, resourcePath) => {
   const gdAxiosConfig = makeGdAxiosConfig(tempToken);
   const url = `gdc/md/${wrkspcId}${resourcePath}`;
-  return axios({...gdAxiosConfig, url});
+  return axios({...gdAxiosConfig, url})
+    .then(res => res.data);
 };
 
 module.exports = {

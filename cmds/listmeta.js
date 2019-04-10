@@ -37,16 +37,16 @@ module.exports = (args) => {
     else if (type === 'type')
       return getObjectTypes(res.tempToken, wrkspc);
   })
-  .then((res) => {
+  .then((data) => {
     spinner.stop();
     console.log(`listing for: ${type}`);
     if (['column', 'dataSet', 'dimension', 'report', 'table'].includes(type) )
-      res.data.query.entries.forEach(entry => {
+      data.query.entries.forEach(entry => {
         const objId = getObjIdFromUri(entry.link);
         console.log(`${objId} ${entry.title}`);
       })
     else
-      res.data.about.links.forEach(entry => {
+      data.about.links.forEach(entry => {
         console.log(entry.title);
         console.log(`  ${entry.link}`);
       })

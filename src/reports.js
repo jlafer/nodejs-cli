@@ -59,6 +59,7 @@ const exportReport = (tempToken, wrkspcId, objectId, filterExprs) => {
       url: uri
     })
   })
+  .then(res => res.data);
 };
 
 const getReport = (tempToken, wrkspcId, objectId) => {
