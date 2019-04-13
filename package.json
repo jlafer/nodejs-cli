@@ -1,7 +1,7 @@
 {
-  "name": "gooddata-cli",
+  "name": "nodejs-cli",
   "version": "1.0.0",
-  "description": "Some NodeJS CLI commands for working with GoodData reports",
+  "description": "A template NodeJS CLI program",
   "main": "index.js",
   "engines": {
     "node": ">=8"
