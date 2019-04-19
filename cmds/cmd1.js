@@ -19,6 +19,6 @@ module.exports = (args) => {
   .catch(err => {
     spinner.stop();
     console.log('error:', err)
-    error(`${err}`);
+    error(`${err}`, true);
   });
 };
