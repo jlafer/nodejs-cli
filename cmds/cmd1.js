@@ -1,5 +1,8 @@
 /*
-  This module supports the 'cmd1' command of the 'nodejs-cli' CLI program.
+  This module provides the 'cmd1' command of the 'nodejs-cli' CLI program.
+  Like many CLIs, it takes a user and password plus other arguments.
+  It writes data to the filesystem.
+  The (possibly long-running) work is done while a spinner is shown to the user.
 */
 const ora = require('ora');
 const {writeToTextFile} = require('jlafer-node-util');
