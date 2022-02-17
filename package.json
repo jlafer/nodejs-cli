@@ -1,6 +1,6 @@
 {
   "name": "nodejs-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A template NodeJS CLI program",
   "main": "index.js",
   "engines": {
@@ -15,11 +15,10 @@
   "author": "jlafer",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.26.0",
     "commander": "^2.19.0",
     "dotenv": "^7.0.0",
     "jlafer-node-util": "^1.0.2",
-    "ora": "^3.4.0",
     "ramda": "^0.26.1"
   }
 }
